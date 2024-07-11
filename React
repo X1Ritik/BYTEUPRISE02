@@ -1,0 +1,61 @@
+import React, { useState } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import carousel styles
+import './Carousel.css';
+import Bottomhome from './Bottomhome';
+import './Bottomhome.css';
+
+const images = {
+    default: ['firstImage.jpg'],
+    London: ['london1.jpg'],
+    America: ['firstImage.jpg'],
+    France: ['fifthImage.jpg'],
+    China: ['placeImage.jpg'],
+};
+
+const prices = {
+    default: 100,
+    London: 40000,
+    America: 50000,
+    France: 45000,
+    China: 35000,
+};
+
+function Home() {
+    const [place, setPlace] = useState('default');
+    const [price, setPrice] = useState(prices.default);
+
+    const handlePlaceChange = (event) => {
+        const selectedPlace = event.target.value;
+        setPlace(selectedPlace);
+        setPrice(prices[selectedPlace]);
+    };
+
+    return (
+        <div className="home">
+            <div className="home1">
+                <h1>Your next travel</h1>
+                <h1>Destination is  <select id="s1" onChange={handlePlaceChange} defaultValue="default">
+                        <option value="default" disabled>Select Place</option>
+                        <option value="London">London</option>
+                        <option value="America">America</option>
+                        <option value="France">France</option>
+                        <option value="China">China</option>
+                    </select>
+                </h1>
+                
+                <Carousel showThumbs={false}>
+                    {images[place]?.map((src, index) => (
+                        <div className='images' key={index}>
+                            <img  src={src} alt={place} />
+                        </div>
+                    ))}
+                </Carousel>
+
+                <Bottomhome Place={place} price={price} />
+            </div>
+        </div>
+    );
+}
+
+export default Home;
